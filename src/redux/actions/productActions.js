@@ -26,7 +26,7 @@ export const fetchProducts = () => async (dispatch) => {
   dispatch({ type: ActionTypes.FETCH_PRODUCTS, payload: data })
 }
 
-export const fetchProduct = () => async (dispatch) => {
+export const fetchProduct = (id) => async (dispatch) => {
   const { data } = await fakeStoreApi.get(`/products/${id}`)
   dispatch({ type: ActionTypes.SELECTED_PRODUCT, payload: data })
 }
