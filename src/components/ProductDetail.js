@@ -2,7 +2,11 @@ import axios from 'axios'
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useParams } from 'react-router-dom'
-import { selectedProduct, removeSelectedProduct } from '../redux/actions/productActions'
+import {
+  selectedProduct,
+  removeSelectedProduct,
+  fetchProduct,
+} from '../redux/actions/productActions'
 
 const ProductDetail = () => {
   const { productId } = useParams()
@@ -10,22 +14,21 @@ const ProductDetail = () => {
   const product = useSelector((state) => state.product)
   const { image, category, title, price, description } = product
 
-  const fetchProductDetail = async () => {
-    try {
-      const { data } = await axios.get(`https://fakestoreapi.com/products/${productId}`)
-      dispatch(selectedProduct(data))
-    } catch (error) {
-      console.log(error)
-    }
-  }
+  // const fetchProductDetail = async () => {
+  //   try {
+  //     const { data } = await axios.get(`https://fakestoreapi.com/products/${productId}`)
+  //     dispatch(selectedProduct(data))
+  //   } catch (error) {
+  //     console.log(error)
+  //   }
+  // }
 
   useEffect(() => {
-    if (productId && productId !== '') fetchProductDetail()
+    if (productId && productId !== '') dispatch(fetchProduct(productId))
     return () => {
       dispatch(removeSelectedProduct())
     }
   }, [productId])
-
 
   return (
     <div className="ui grid container">
